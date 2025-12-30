@@ -1,0 +1,132 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+:root {
+  /* THE VERCEL PALETTE */
+  --bg-black: #000000;
+  --bg-card: #111111; /* Slightly lighter for cards */
+  --text-primary: #ffffff;
+  --text-secondary: #888888; /* That classic Vercel gray text */
+  --accent-glow: linear-gradient(180deg, #fff 0%, #aaa 100%); /* Silver glow */
+  
+  /* BORDERS are key for this look */
+  --border-subtle: 1px solid #333333;
+  
+  /* GRID PATTERN (The Tech Look) */
+  --grid-color: rgba(255, 255, 255, 0.1);
+
+  --font-main: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-black);
+  /* This creates a subtle grid background like high-end dev tools */
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+  linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 50px 50px;
+  
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased; /* Makes font crisp */
+  overflow-x: hidden; /* Prevents horizontal scroll from ribbon */
+}
+
+/* New Minimal Glass Utility */
+.glass-panel {
+  background: rgba(0, 0, 0, 0.7); /* Dark Glass */
+  backdrop-filter: blur(10px);
+  border: var(--border-subtle);
+  border-radius: 8px; /* Sharper corners than before */
+}
+
+/* Removes default link styles */
+a { text-decoration: none; color: inherit; }
+
+/* --- SEXY UPGRADES --- */
+
+/* 1. The "Scanline" Texture (CRT Monitor Vibe) */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 50; /* Above content, below UI overlays */
+}
+
+/* 2. The "Vignette" (Focuses eyes on center) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+  z-index: 49;
+}
+
+/* 3. Hacker Selection */
+::selection {
+  background: #00ff00; /* Terminal Green */
+  color: #000;
+}
+
+/* 4. Glitch Animation Keyframes */
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(-2deg); }
+  40% { transform: skew(2deg); }
+  60% { transform: skew(-1deg); }
+  80% { transform: skew(1deg); }
+  100% { transform: skew(0deg); }
+}
+
+@keyframes glitch-anim {
+  0% { clip-path: inset(80% 0 0 0); transform: translate(-2px, 2px); }
+  20% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -2px); }
+  40% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 2px); }
+  60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
+  80% { clip-path: inset(10% 0 80% 0); transform: translate(-2px, 2px); }
+  100% { clip-path: inset(30% 0 20% 0); transform: translate(2px, -2px); }
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text:hover::before,
+.glitch-text:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.glitch-text:hover::before {
+  left: 2px;
+  text-shadow: -1px 0 #ff00c1;
+  animation: glitch-anim 2s infinite linear alternate-reverse;
+}
+
+.glitch-text:hover::after {
+  left: -2px;
+  text-shadow: -1px 0 #00fff9;
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
