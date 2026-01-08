@@ -1,9 +1,15 @@
 // src/App.jsx
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import Intro from './components/Intro';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Projects from './components/Projects';
+import TechStack from './components/TechStack';
 import Services from './components/Services';
+import Testimonials from './components/Testimonials';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 import Cart from './components/Cart';
 import Loader from './components/Loader';
 import './index.css';
@@ -63,7 +69,7 @@ const StatusBadge = () => {
         letterSpacing: '0.1em',
         color: '#666',
       }}>
-        v1.0 // Building in Public
+        v0.2 (beta) // Building in Public
       </span>
     </div>
   );
@@ -74,6 +80,7 @@ function App() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showIntro, setShowIntro] = useState(true);
 
   const handleAddToCart = (product) => {
     setCart([...cart, product]);
@@ -84,11 +91,22 @@ function App() {
   return (
     <>
       <AnimatePresence>
+        {showIntro && (
+          <Intro onComplete={() => setShowIntro(false)} />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
         {loading && <Loader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
       {!loading && (
         <div className="app-container">
+          {/* Mesh Gradient Background */}
+          <div className="mesh-gradient mesh-gradient-1"></div>
+          <div className="mesh-gradient mesh-gradient-2"></div>
+          <div className="mesh-gradient mesh-gradient-3"></div>
+          
           {/* Pass cart length to Navbar so the icon updates 
             automatically. This is "State Lifting." 
           */}
@@ -99,7 +117,11 @@ function App() {
           
           <main>
             <Hero />
+            <TechStack />
+            <Projects />
             <Services addToCart={handleAddToCart} />
+            <Testimonials />
+            <Contact />
           </main>
           
           <AnimatePresence>
@@ -112,11 +134,8 @@ function App() {
           </AnimatePresence>
           
           <StatusBadge />
-          <ConstructionRibbon />
 
-          <footer style={{ textAlign: 'center', padding: '2rem', opacity: 0.6 }}>
-            <p>&copy; 2025 Devraj | Apna Kaam, Apna Style</p> 
-          </footer>
+          <Footer />
         </div>
       )}
     </>
